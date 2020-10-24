@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/detail', 'DetailController@index')->name('detail');
+Route::get('/checkout', 'CheckoutController@index')->name('checout');
+Route::get('/checkout/success', 'CheckoutController@success')->name('checkout-success');
 
 Route::prefix('admin')->namespace('Admin')->group(function () {
     Route::get('/', 'DashboardController@index')->name('dashboard');
