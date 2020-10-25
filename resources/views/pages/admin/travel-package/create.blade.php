@@ -19,7 +19,7 @@
         </div>
     @endif
 
-    <div class="card-shadow">
+    <div class="card shadow">
         <div class="card-body">
             <form action="{{ route('travel-package.store') }}" method="POST">
                 @csrf
