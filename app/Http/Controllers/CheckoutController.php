@@ -8,6 +8,8 @@ use App\TravelPackage;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Mail;
+use App\Mail\TransactionSuccess;
 
 class CheckoutController extends Controller
 {
@@ -86,9 +88,16 @@ class CheckoutController extends Controller
 
     public function success($id)
     {
-        $transaction = Transaction::findOrFail($id);
+        $transaction = Transaction::with(['details', 'travel_package.galleries', 'user'])->findOrFail($id);
         $transaction->transaction_status = 'PENDING';
         $transaction->save();
+
+        // return $transaction->travel_package->galleries[0]->image;
+
+        Mail::to($transaction->user)->send(
+            new TransactionSuccess($transaction)
+        );
+
         return view('pages.success');
     }
 }
